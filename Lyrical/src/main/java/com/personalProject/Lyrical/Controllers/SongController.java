@@ -1,4 +1,4 @@
-package com.personalProject.Lyrical.Song;
+package com.personalProject.Lyrical.Controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

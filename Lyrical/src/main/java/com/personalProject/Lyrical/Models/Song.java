@@ -1,4 +1,4 @@
-package com.personalProject.Lyrical.Song;
+package com.personalProject.Lyrical.Models;
 
 import java.time.LocalDate;
 
