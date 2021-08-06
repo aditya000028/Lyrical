@@ -1,36 +1,62 @@
 package com.personalProject.Lyrical.Services;
 
 import com.personalProject.Lyrical.Models.Song;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import com.google.gson.*;
 
-import java.time.LocalDate;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.*;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class SearchService {
 
-//    @Value("${geniusURL}")
-//    public String geniusURL;
+    @Value("${AWS_SEARCH_API}")
+    private String AWS_SEARCH_API;
 
-    public List<Song> makeAPICall(String songName) {
-        return List.of(
-                new Song(
-                        1L,
-                        songName,
-                        "Drake",
-                        "Scorpion",
-                        LocalDate.now(),
-                        "Rap",
-                        163,
-                        "OVO"
-                )
-        );
+    private final SongService songService;
+
+    @Autowired
+    SearchService(SongService songService) {
+        this.songService = songService;
     }
 
-    // make request to api to get/store results of a song request
+    public List<Song> getQueryResult(String songName) throws IOException, URISyntaxException {
+        return parseResponse(makeAPICall(songName));
+    }
 
-    // have a method to set the url where you want to request to
+    private JsonObject makeAPICall(String songName) throws IOException, URISyntaxException {
+        String request = AWS_SEARCH_API + new URI(null, null, null, songName, null);
 
-    // have a method to actually make the request
+        URL url = new URL(request);
+        HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+        JsonElement jsonElement = JsonParser.parseReader(new InputStreamReader(httpURLConnection.getInputStream()));
+        httpURLConnection.disconnect();
+
+        return jsonElement.getAsJsonObject();
+    }
+
+    private List<Song> parseResponse(JsonObject result) {
+        List<Song> results = new ArrayList<>();
+        JsonArray matches = result.get("response").getAsJsonObject().get("hits").getAsJsonArray();
+
+        for (JsonElement matchElement : matches) {
+            JsonObject matchObject = ((JsonObject) matchElement).get("result").getAsJsonObject();
+
+            Song song = new Song();
+            song.setId(songService.getIDFromObj(matchObject));
+            song.setName(songService.getNameFromObj(matchObject));
+            song.setArtist(songService.getArtistFromObj(matchObject));
+            song.setImageURL(songService.getImageURLFromObj(matchObject));
+
+            results.add(song);
+        }
+
+        return results;
+    }
 }

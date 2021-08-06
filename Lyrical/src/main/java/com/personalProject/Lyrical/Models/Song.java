@@ -11,6 +11,7 @@ public class Song {
     private String genre;
     private int length;
     private String label;
+    private String imageURL;
 
     public Song() {
     }
@@ -22,7 +23,8 @@ public class Song {
                 LocalDate releaseDate,
                 String genre,
                 int length,
-                String label)
+                String label,
+                String imageURL)
     {
         this.id = id;
         this.name = name;
@@ -32,6 +34,7 @@ public class Song {
         this.genre = genre;
         this.length = length;
         this.label = label;
+        this.imageURL = imageURL;
     }
 
     public Song(String name,
@@ -40,7 +43,8 @@ public class Song {
                 LocalDate releaseDate,
                 String genre,
                 int length,
-                String label)
+                String label,
+                String imageURL)
     {
         this.name = name;
         this.artist = artist;
@@ -49,6 +53,7 @@ public class Song {
         this.genre = genre;
         this.length = length;
         this.label = label;
+        this.imageURL = imageURL;
     }
 
     public long getId() {
@@ -115,6 +120,14 @@ public class Song {
         this.label = label;
     }
 
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
     @Override
     public String toString() {
         return "Song{" +
@@ -126,6 +139,7 @@ public class Song {
                 ", genre='" + genre + '\'' +
                 ", length=" + length +
                 ", label='" + label + '\'' +
+                ", imageURL='" + imageURL + '\'' +
                 '}';
     }
 }
