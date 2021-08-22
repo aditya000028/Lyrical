@@ -1,17 +1,20 @@
 package com.personalProject.Lyrical.Models;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Song {
     private long id;
     private String name;
     private String artist;
     private String album;
-    private LocalDate releaseDate;
+    private String releaseDate;
     private String genre;
     private int length;
-    private String label;
+    private String labels;
     private String imageURL;
+    private String lyrics;
 
     public Song() {
     }
@@ -20,11 +23,12 @@ public class Song {
                 String name,
                 String artist,
                 String album,
-                LocalDate releaseDate,
+                String releaseDate,
                 String genre,
                 int length,
-                String label,
-                String imageURL)
+                String labels,
+                String imageURL,
+                String lyrics)
     {
         this.id = id;
         this.name = name;
@@ -33,18 +37,28 @@ public class Song {
         this.releaseDate = releaseDate;
         this.genre = genre;
         this.length = length;
-        this.label = label;
+        this.labels = labels;
         this.imageURL = imageURL;
+        this.lyrics = lyrics;
+    }
+
+    public String getLyrics() {
+        return lyrics;
+    }
+
+    public void setLyrics(String lyrics) {
+        this.lyrics = lyrics;
     }
 
     public Song(String name,
                 String artist,
                 String album,
-                LocalDate releaseDate,
+                String releaseDate,
                 String genre,
                 int length,
-                String label,
-                String imageURL)
+                String labels,
+                String imageURL,
+                String lyrics)
     {
         this.name = name;
         this.artist = artist;
@@ -52,8 +66,9 @@ public class Song {
         this.releaseDate = releaseDate;
         this.genre = genre;
         this.length = length;
-        this.label = label;
+        this.labels = labels;
         this.imageURL = imageURL;
+        this.lyrics = lyrics;
     }
 
     public long getId() {
@@ -88,11 +103,11 @@ public class Song {
         this.album = album;
     }
 
-    public LocalDate getReleaseDate() {
+    public String getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(LocalDate releaseDate) {
+    public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
 
@@ -112,12 +127,12 @@ public class Song {
         this.length = length;
     }
 
-    public String getLabel() {
-        return label;
+    public String getLabels() {
+        return labels;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setLabels(String labels) {
+        this.labels = labels;
     }
 
     public String getImageURL() {
@@ -135,11 +150,12 @@ public class Song {
                 ", name='" + name + '\'' +
                 ", artist='" + artist + '\'' +
                 ", album='" + album + '\'' +
-                ", releaseDate=" + releaseDate +
+                ", releaseDate='" + releaseDate + '\'' +
                 ", genre='" + genre + '\'' +
                 ", length=" + length +
-                ", label='" + label + '\'' +
+                ", labels=" + labels +
                 ", imageURL='" + imageURL + '\'' +
+                ", lyrics='" + lyrics + '\'' +
                 '}';
     }
 }
