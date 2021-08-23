@@ -41,6 +41,18 @@ public class SongService {
         return obj.get("text").getAsString();
     }
 
+    public List<String> getLyricsFromObj(JsonObject obj) {
+
+        JsonArray lyricsArray = obj.get("text").getAsJsonArray();
+        List<String> lyrics = new ArrayList<>();
+
+        for (JsonElement lyric : lyricsArray) {
+            lyrics.add(lyric.getAsString());
+        }
+
+        return lyrics;
+    }
+
     public Song getSongInformation(long id) throws IOException {
         return parseResponse(makeAPICall(id));
     }
@@ -86,5 +98,8 @@ public class SongService {
                     break;
             }
         }
+
+        JsonObject lyricsObj = jsonObject.get("sections").getAsJsonArray().get(1).getAsJsonObject();
+        song.setLyrics(getLyricsFromObj(lyricsObj));
     }
 }

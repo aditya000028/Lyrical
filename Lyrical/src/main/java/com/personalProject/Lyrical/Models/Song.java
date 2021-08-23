@@ -1,7 +1,5 @@
 package com.personalProject.Lyrical.Models;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Song {
@@ -14,7 +12,7 @@ public class Song {
     private int length;
     private String labels;
     private String imageURL;
-    private String lyrics;
+    private List<String> lyrics;
 
     public Song() {
     }
@@ -28,7 +26,7 @@ public class Song {
                 int length,
                 String labels,
                 String imageURL,
-                String lyrics)
+                List<String> lyrics)
     {
         this.id = id;
         this.name = name;
@@ -42,14 +40,6 @@ public class Song {
         this.lyrics = lyrics;
     }
 
-    public String getLyrics() {
-        return lyrics;
-    }
-
-    public void setLyrics(String lyrics) {
-        this.lyrics = lyrics;
-    }
-
     public Song(String name,
                 String artist,
                 String album,
@@ -58,7 +48,7 @@ public class Song {
                 int length,
                 String labels,
                 String imageURL,
-                String lyrics)
+                List<String> lyrics)
     {
         this.name = name;
         this.artist = artist;
@@ -129,6 +119,14 @@ public class Song {
 
     public String getLabels() {
         return labels;
+    }
+
+    public List<String> getLyrics() {
+        return lyrics;
+    }
+
+    public void setLyrics(List<String> lyrics) {
+        this.lyrics = lyrics;
     }
 
     public void setLabels(String labels) {
