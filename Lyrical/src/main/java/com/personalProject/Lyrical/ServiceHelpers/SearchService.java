@@ -1,4 +1,4 @@
-package com.personalProject.Lyrical.Services;
+package com.personalProject.Lyrical.ServiceHelpers;
 
 import com.personalProject.Lyrical.Models.Song;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import com.google.gson.*;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
