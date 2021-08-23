@@ -42,10 +42,10 @@ public class SearchService {
 
     private List<Song> parseResponse(JsonObject result) {
         List<Song> results = new ArrayList<>();
-        JsonArray matches = result.get("response").getAsJsonObject().get("hits").getAsJsonArray();
+        JsonArray matches = result.get("tracks").getAsJsonObject().get("hits").getAsJsonArray();
 
         for (JsonElement matchElement : matches) {
-            JsonObject matchObject = ((JsonObject) matchElement).get("result").getAsJsonObject();
+            JsonObject matchObject = ((JsonObject) matchElement).get("track").getAsJsonObject();
 
             Song song = new Song();
             song.setId(songService.getIDFromObj(matchObject));
