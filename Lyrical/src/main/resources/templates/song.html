@@ -18,7 +18,7 @@
       <h4 th:text="|Release date: ${songInfo.releaseDate}|">Release Date</h4>
 
       <h1>Label</h1>
-      <div th:each="label : ${songInfo.getLabels()}">
+      <div th:each="label : ${songInfo.getLabels() }">
         <h5 th:text="${label}">Label</h5>
       </div>
 
