@@ -27,7 +27,7 @@ public class ProfileController {
 
         if (authentication != null && authentication.isAuthenticated()) {
 
-            String username = oAuth2User.getAttribute("name");
+            String username = oAuth2User.getAttribute("username");
 
             try {
                User user = profileService.getUserProfile(username);
