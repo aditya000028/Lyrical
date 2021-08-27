@@ -13,36 +13,42 @@
 
     </div>
 
-    <div th:if="${userProfile}">
-      <form action="#" th:action="@{/profileUpdate}" method="post">
-        <legend th:text="${userProfile.name}">User Profile</legend>
-        <div class="mb-3">
-          <label for="disabledEmailInput" class="form-label">Email</label>
-          <input type="text" id="disabledEmailInput" class="form-control" th:text="${userProfile.email}" disabled readonly>
-        </div>
-        <div class="mb-3">
-          <label for="userName" class="form-label">Name</label>
-          <input class="form-control form-control-lg" type="text" aria-label="user-name" th:text="${userProfile.name}" id="userName">
-        </div>
-        <div class="mb-3">
-          <label for="userAddress" class="form-label">Address</label>
-          <input class="form-control" type="text" aria-label="user-address" th:text="${userProfile.address}" id="userAddress">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Birthdate</label>
-          <div th:if="${#strings.isEmpty(userProfile.birthdate)}">
-            <input class="form-control" type="text" aria-label="user-birthdate" th:text="${userProfile.birthdate}">
+    <div class="container">
+      <div th:if="${user}">
+        <form action="#" th:action="@{/profileUpdate}" th:object="${user}" method="post">
+          <div th:if="${name} != null">
+            <legend th:text="|${user.name}'s profile|">User Profile</legend>
           </div>
-          <div th:unless="${not #strings.isEmpty(userProfile.birthdate)}">
-            <input class="form-control" type="text" aria-label="user-birthdate" th:text="${userProfile.birthdate}">
+          <div th:unless="${name} != null">
+            <legend th:text="|${user.email}'s profile|">User Profile</legend>
           </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Update</button>
-      </form>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="text" class="form-control" th:field="*{email}" disabled readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input class="form-control form-control-lg" type="text" th:field="*{name}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Address</label>
+            <input class="form-control" type="text" th:field="*{address}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Birthdate</label>
+            <div th:if="${#strings.isEmpty(birthdate)}">
+              <input class="form-control" type="text" th:field="*{birthdate}">
+            </div>
+            <div th:unless="${#strings.isEmpty(birthdate)}">
+              <input class="form-control" type="text" th:field="*{birthdate}">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+      </div>
+      <div th:unless="${error}">
+        <h3 th:text="${error}">Error</h3>
+      </div>
     </div>
-    <div th:unless="${error}">
-      <h3 th:text="${error}">Error</h3>
-    </div>
-
   </body>
 </html>

@@ -31,7 +31,7 @@ public class ProfileController {
 
             try {
                User user = profileService.getUserProfile(username);
-               model.addAttribute("userProfile", user);
+               model.addAttribute("user", user);
             } catch (IOException ioException) {
                 model.addAttribute("error", ioException.getMessage());
             }
