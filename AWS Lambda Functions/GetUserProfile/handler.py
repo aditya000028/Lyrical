@@ -33,8 +33,6 @@ def getUserProfile_handler(event, context):
         if tuple is not None:
             email = tuple[1]
             name = tuple[2]
-            address = tuple[3]
-            birthdate = tuple[4]
 
             user = {}
 
@@ -45,14 +43,6 @@ def getUserProfile_handler(event, context):
                 user['name'] = name
             else:
                 user['name'] = ""
-            if address is not None: 
-                user['address'] = address
-            else:
-                user['address'] = ""
-            if birthdate is not None:
-                user['birthdate'] = birthdate
-            else:
-                user['birthdate'] = ""
 
             returnVal['body'] = json.dumps(user)
 
