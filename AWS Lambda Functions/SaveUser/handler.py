@@ -14,7 +14,7 @@ def saveUsers_handler(event, context):
     
     email = event['request']['userAttributes']['email']
     username = event['userName']
-    sql_query = "INSERT INTO Users (username, email, name, address, birthdate) VALUES (%s, %s, null, null, null)"
+    sql_query = "INSERT INTO Users (username, email, name) VALUES (%s, %s, null)"
 
     cursor = connection.cursor()
     cursor.execute(sql_query, (username, email))
