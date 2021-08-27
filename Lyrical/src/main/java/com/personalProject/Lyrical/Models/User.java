@@ -2,7 +2,7 @@ package com.personalProject.Lyrical.Models;
 
 public class User {
 
-    private long id;
+    private String username;
     private String email;
     private String name;
     private String address;
@@ -10,20 +10,20 @@ public class User {
 
     public User() {}
 
-    public User(long id, String email, String name, String address, String birthdate) {
-        this.id = id;
+    public User(String username, String email, String name, String address, String birthdate) {
+        this.username = username;
         this.email = email;
         this.name = name;
         this.address = address;
         this.birthdate = birthdate;
     }
 
-    public long getId() {
-        return id;
+    public String getUsername() {
+        return username;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -61,7 +61,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "username=" + username +
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
