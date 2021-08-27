@@ -36,7 +36,7 @@ public class ProfileService {
     private User parseResponse(JsonObject obj) {
         User user = new User();
 
-        user.setId(obj.get("id").getAsLong());
+        user.setUsername(obj.get("username").getAsString());
         user.setAddress(obj.get("address").getAsString());
         user.setName(obj.get("name").getAsString());
         user.setEmail(obj.get("email").getAsString());
