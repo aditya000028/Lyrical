@@ -24,24 +24,11 @@
           </div>
           <div class="mb-3">
             <label class="form-label">Email</label>
-            <input type="text" class="form-control" th:field="*{email}" disabled readonly>
+            <input type="text" class="form-control" th:field="*{email}">
           </div>
           <div class="mb-3">
             <label class="form-label">Name</label>
             <input class="form-control form-control-lg" type="text" th:field="*{name}">
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Address</label>
-            <input class="form-control" type="text" th:field="*{address}">
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Birthdate</label>
-            <div th:if="${#strings.isEmpty(birthdate)}">
-              <input class="form-control" type="text" th:field="*{birthdate}">
-            </div>
-            <div th:unless="${#strings.isEmpty(birthdate)}">
-              <input class="form-control" type="text" th:field="*{birthdate}">
-            </div>
           </div>
           <button type="submit" class="btn btn-primary">Update</button>
         </form>
