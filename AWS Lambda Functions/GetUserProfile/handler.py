@@ -27,7 +27,7 @@ def getUserProfile_handler(event, context):
 
     try:
         cursor = connection.cursor()
-        cursor.execute(sql_query, username)
+        cursor.execute(sql_query, (username))
         tuple = cursor.fetchone()
 
         if tuple is not None:
