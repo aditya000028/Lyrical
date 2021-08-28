@@ -37,10 +37,8 @@ public class ProfileService {
         User user = new User();
 
         user.setUsername(obj.get("username").getAsString());
-        user.setAddress(obj.get("address").getAsString());
         user.setName(obj.get("name").getAsString());
         user.setEmail(obj.get("email").getAsString());
-        user.setBirthdate(obj.get("birthdate").getAsString());
 
         return user;
     }
