@@ -44,7 +44,7 @@ public class ProfileController {
         }
     }
 
-    @PostMapping("/profileUpdate")
+    @PostMapping("/profile/update")
     public String updateUserProfile() {
         // perform update
         return "profile";
