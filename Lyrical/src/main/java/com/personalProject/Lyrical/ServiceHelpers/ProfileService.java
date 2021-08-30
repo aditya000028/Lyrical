@@ -18,15 +18,16 @@ public class ProfileService {
     @Value("${AWS_PROFILE_API}")
     private String AWS_PROFILE_API;
 
-    public User getUserProfile(String username) throws IOException {
-        return parseResponse(makeAPICall(username));
+    public User getUserProfile(String username, String access_token) throws IOException {
+        return parseResponse(makeAPICall(username, access_token));
     }
 
-    private JsonObject makeAPICall(String username) throws IOException {
+    private JsonObject makeAPICall(String username, String access_token) throws IOException {
         String request = AWS_PROFILE_API + username;
 
         URL url = new URL(request);
         HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+        httpURLConnection.setRequestProperty("Authorization", access_token);
         JsonElement jsonElement = JsonParser.parseReader(new InputStreamReader(httpURLConnection.getInputStream()));
         httpURLConnection.disconnect();
 
