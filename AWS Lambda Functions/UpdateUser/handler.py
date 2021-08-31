@@ -39,7 +39,9 @@ def updateUserProfile_handler(event, context):
 
     except:
 
-        message = {"Unable to update user attributes"}
+        message = "Unable to update user attributes"
 
         returnVal['statusCode'] = 503
-        returnVal['body'] = json.dumps(message)
+        returnVal['body'] = json.dumps({
+            "message": message
+        })
