@@ -7,10 +7,12 @@ client = boto3.client('cognito-idp')
 
 def updateUserProfile_handler(event, context):
     
-    email = event['email']
-    name = event['name']
-    accessToken = event['accessToken']
-
+    jsonBody = json.loads(event['body'])
+    
+    email = jsonBody["email"]
+    name = jsonBody["name"]
+    accessToken = event['headers']['Access-Token']
+    
     returnVal = {
         "isBase64Encoded": False,
         "statusCode": 200,
@@ -34,14 +36,19 @@ def updateUserProfile_handler(event, context):
             ],
             AccessToken = accessToken
         )
-
-        returnVal['body'] = json.dumps(response)
+        
+        if response['ResponseMetadata']['HTTPStatusCode'] == 200:
+            returnVal['body'] = json.dumps({
+                "message": "Success"
+            })
 
     except:
-
-        message = "Unable to update user attributes"
+        
+        message = "Failed: HTTPStatusCode " + response['ResponseMetadata']['HTTPStatusCode']
 
         returnVal['statusCode'] = 503
         returnVal['body'] = json.dumps({
             "message": message
         })
+        
+    return returnVal
