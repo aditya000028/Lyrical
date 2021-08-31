@@ -13,7 +13,7 @@ def getUserProfile_handler(event, context):
         }
     }
 
-    accessToken = event['accessToken']
+    accessToken = event['headers']['Access-Token']
 
     try:
         response = client.get_user(
