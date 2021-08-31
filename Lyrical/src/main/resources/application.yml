@@ -11,7 +11,7 @@ spring:
             client-id: ${COGNITO_CLIENT_ID}
             client-secret: ${COGNITO_CLIENT_SECRET}
             clientName: Lyrical-Spring-Boot-Client
-            scope: openid, email
+            scope: openid, email, aws.cognito.signin.user.admin
             redirectUriTemplate: http://localhost:8080/login/oauth2/code/cognito
         provider:
           cognito:
