@@ -16,10 +16,10 @@
     <div class="container">
       <div th:if="${user}">
         <form action="#" th:action="@{/profile/update}" th:object="${user}" method="post">
-          <div th:if="${name} != null">
+          <div th:if="${user.name} != null">
             <legend th:text="|${user.name}'s profile|">User Profile</legend>
           </div>
-          <div th:unless="${name} != null">
+          <div th:unless="${user.name} != null">
             <legend th:text="|${user.email}'s profile|">User Profile</legend>
           </div>
           <input type="hidden" th:field="*{username}" id="username">
