@@ -1,16 +1,15 @@
 package com.personalProject.Lyrical.Controllers;
 
-import com.personalProject.Lyrical.Models.User;
+import com.personalProject.Lyrical.Models.User.Password;
+import com.personalProject.Lyrical.Models.User.User;
 import com.personalProject.Lyrical.ServiceHelpers.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientId;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +34,7 @@ public class ProfileController {
 
         if (authentication != null && authentication.isAuthenticated()) {
 
-            String idToken = oidcUser.getIdToken().getTokenValue();
+            String idToken = getIDToken(oidcUser);
             String accessToken = getAccessToken(authentication);
 
             try {
@@ -59,7 +58,7 @@ public class ProfileController {
 
         if (authentication != null && authentication.isAuthenticated()) {
 
-            String idToken = oidcUser.getIdToken().getTokenValue();
+            String idToken = getIDToken(oidcUser);
             String accessToken = getAccessToken(authentication);
 
             String message = profileService.updateUserProfile(user, idToken, accessToken);
@@ -77,6 +76,41 @@ public class ProfileController {
         }
     }
 
+    @GetMapping("/profile/changePassword")
+    public String getChangePassword(Authentication authentication, Model model) {
+        if (authentication != null && authentication.isAuthenticated()) {
+            model.addAttribute("password", new Password());
+            return "changePassword";
+        } else {
+            model.addAttribute("error", "You must be logged in to access this");
+            return "home";
+        }
+    }
+
+    @PostMapping("/profile/changePassword")
+    public String changePassword(@ModelAttribute Password password, Authentication authentication, Model model, @AuthenticationPrincipal OidcUser oidcUser) {
+
+        if (authentication != null && authentication.isAuthenticated()) {
+
+            String idToken = getIDToken(oidcUser);
+            String accessToken = getAccessToken(authentication);
+            
+            String message = profileService.changePassword(idToken, accessToken, authentication.getName(), password);
+
+            if (message.contains("Success")) {
+                model.addAttribute("success", "Your password has been changed");
+            } else {
+                model.addAttribute("error", "Your password could not be changed");
+            }
+
+            return "profile";
+
+        } else {
+            model.addAttribute("error", "You must be signed in to access this page");
+            return "home";
+        }
+    }
+
     private String getAccessToken(Authentication authentication) {
 
         if (authentication != null) {
@@ -88,6 +122,10 @@ public class ProfileController {
         } else {
             return "";
         }
+    }
+
+    private String getIDToken(OidcUser oidcUser) {
+        return oidcUser.getIdToken().getTokenValue();
     }
 
 }

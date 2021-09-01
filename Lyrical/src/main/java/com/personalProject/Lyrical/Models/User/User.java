@@ -1,4 +1,4 @@
-package com.personalProject.Lyrical.Models;
+package com.personalProject.Lyrical.Models.User;
 
 public class User {
 
