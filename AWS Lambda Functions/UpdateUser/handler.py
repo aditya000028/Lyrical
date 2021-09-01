@@ -20,7 +20,7 @@ def updateUserProfile_handler(event, context):
             "Content-Type": "application/json"
         }
     }
-
+    
     try:
 
         response = client.update_user_attributes(
@@ -42,11 +42,11 @@ def updateUserProfile_handler(event, context):
                 "message": "Success"
             })
 
-    except:
+    except Exception as e:
         
-        message = "Failed: HTTPStatusCode " + response['ResponseMetadata']['HTTPStatusCode']
+        message = "Failed - Type: " + type(e).__name__
 
-        returnVal['statusCode'] = 503
+        returnVal['statusCode'] = 400
         returnVal['body'] = json.dumps({
             "message": message
         })
