@@ -12,14 +12,18 @@ connection = pymysql.connect(host=endpoint, user=username, passwd=password, db=d
 
 def saveUsers_handler(event, context):
     
-    email = event['request']['userAttributes']['email']
     username = event['userName']
-    sql_query = "INSERT INTO Users (username, email, name) VALUES (%s, %s, null)"
+    sql_query = "INSERT INTO Users (username) VALUES (%s)"
 
-    cursor = connection.cursor()
-    cursor.execute(sql_query, (username, email))
+    try:
+
+        cursor = connection.cursor()
+        cursor.execute(sql_query, username)
+        
+        connection.commit()
     
-    connection.commit()
+    except:
+        event['response']['error'] = "Unable to save the user in the database"
 
 
     return event

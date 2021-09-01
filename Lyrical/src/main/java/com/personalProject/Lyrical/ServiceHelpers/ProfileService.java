@@ -23,21 +23,27 @@ public class ProfileService {
 
     private final Gson gson = new Gson();
 
-    public void loadUserProfile(User user, String idToken) throws IOException {
-        setUserAttributesFromJson(makeAPICall(user, idToken, "GET"), user);
+    public void loadUserProfile(User user, String idToken, String accessToken) throws IOException {
+        setUserAttributesFromJson(makeAPICall(user, idToken, accessToken, "GET"), user);
     }
 
-    public String updateUserProfile(User user, String idToken) throws IOException {
-        JsonObject obj = makeAPICall(user, idToken, "PUT");
-        return obj.get("message").getAsString();
+    public String updateUserProfile(User user, String idToken, String accessToken) {
+
+        try {
+            makeAPICall(user, idToken, accessToken, "PUT");
+            return "Updated";
+        } catch (IOException ioException) {
+            return "Error: This email already has an account";
+        }
     }
 
-    private JsonObject makeAPICall(User user, String idToken, String requestType) throws IOException {
+    private JsonObject makeAPICall(User user, String idToken, String accessToken, String requestType) throws IOException {
         String request = AWS_PROFILE_API + user.getUsername();
 
         URL url = new URL(request);
         HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
         httpURLConnection.setRequestProperty("Authorization", idToken);
+        httpURLConnection.setRequestProperty("Access-Token", accessToken);
 
         if (requestType.equals("PUT")) {
             httpURLConnection.setRequestMethod("PUT");
@@ -53,10 +59,15 @@ public class ProfileService {
     }
 
     private void setUserAttributesFromJson(JsonObject obj, User user) {
-        user.setUsername(obj.get("username").getAsString());
-        user.setName(obj.get("name").getAsString());
-        user.setEmail(obj.get("email").getAsString());
-
+        for (JsonElement element : obj.get("UserAttributes").getAsJsonArray()) {
+            JsonObject attributeObject = (JsonObject) element;
+            if (attributeObject.get("Name").getAsString().equals("name")) {
+                user.setName(attributeObject.get("Value").getAsString());
+            }
+            if (attributeObject.get("Name").getAsString().equals("email")) {
+                user.setEmail(attributeObject.get("Value").getAsString());
+            }
+        }
     }
 
     private void setRequestBody(HttpURLConnection httpURLConnection, User user) throws IOException {
