@@ -54,7 +54,7 @@ public class ProfileController {
         }
     }
 
-    @PostMapping("/profile/update")
+    @PostMapping("/profile")
     public String updateUserProfile(@ModelAttribute User user, Model model, Authentication authentication, @AuthenticationPrincipal OidcUser oidcUser) {
 
         if (authentication != null && authentication.isAuthenticated()) {
@@ -62,13 +62,11 @@ public class ProfileController {
             String idToken = oidcUser.getIdToken().getTokenValue();
             String accessToken = getAccessToken(authentication);
 
-            try {
-                String message = profileService.updateUserProfile(user, idToken, accessToken);
-                if (!message.isEmpty()) {
-                    model.addAttribute("error", message);
-                }
-            } catch (IOException ioException) {
-                model.addAttribute("error", ioException.getMessage());
+            String message = profileService.updateUserProfile(user, idToken, accessToken);
+            if (!message.isEmpty()) {
+                model.addAttribute("error", message);
+            } else {
+                model.addAttribute("message", message);
             }
 
             return "profile";

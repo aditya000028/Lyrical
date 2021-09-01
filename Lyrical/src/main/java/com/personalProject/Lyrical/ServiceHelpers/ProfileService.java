@@ -27,14 +27,13 @@ public class ProfileService {
         setUserAttributesFromJson(makeAPICall(user, idToken, accessToken, "GET"), user);
     }
 
-    public String updateUserProfile(User user, String idToken, String accessToken) throws IOException {
-        JsonObject obj = makeAPICall(user, idToken, accessToken, "PUT");
-        String message = obj.get("message").getAsString();
+    public String updateUserProfile(User user, String idToken, String accessToken) {
 
-        if (message.contains("Failed")) {
-            return "Update failed, please try again later";
-        } else {
-            return "";
+        try {
+            makeAPICall(user, idToken, accessToken, "PUT");
+            return "Updated";
+        } catch (IOException ioException) {
+            return "Error: This email already has an account";
         }
     }
 
